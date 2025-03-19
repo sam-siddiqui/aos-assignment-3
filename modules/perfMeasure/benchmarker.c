@@ -65,7 +65,7 @@ int createTestJobs(benchMarkPtr benchMark) {
     free(jobArgs[RUN_BURSTTIME_INDEX]);
     free(jobArgs[RUN_PRI_INDEX]);
     free(jobArgs[RUN_JOBNAME_INDEX + 1]);
-    clearJob(testJob, DELETE_JOB);
+    clearJob(testJob, CLEAR_JOB);
     free(testJob);
 
     return SUCCESS;
