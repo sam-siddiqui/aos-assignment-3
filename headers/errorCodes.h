@@ -1,0 +1,15 @@
+#ifndef ERROR_CODES_H
+#define ERROR_CODES_H
+
+#define SUCCESS 1 
+
+#define PROCESS_OR_PIPE_FAILED -1
+#define CMD_NUM_WRONG -5
+#define CMD_TYPE_WRONG 5 
+#define BUFFER_FULL -10
+
+#define INVALID_POLICY -5
+#define BENCHMARK_FILE_CREATION_FAILED -6
+#define JOB_CREATION_FAILED -7
+
+#endif
