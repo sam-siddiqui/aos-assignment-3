@@ -20,7 +20,7 @@ void listQueue(char* cmdV[], int cmdC) {
 
 void changeSchedulerPolicy(char* cmdV[], int cmdC) {
     if(isTestRunning()) {
-        printf(ERROR_TEST_RUNNING_FORMAT, TOSTRING(set_policy));
+        printf(ERROR_TEST_RUNNING_FORMAT, TO_STRING(set_policy));
         return;
     }
     
