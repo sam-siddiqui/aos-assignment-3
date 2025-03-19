@@ -2,7 +2,7 @@
 
 void getNextScheduledJob(JobPtr currentJobPtr, JobPtr jobPtr) {
     // Update state in readyQueue to be running
-    updateJobStatus(&readyQueue[rqTail], "run");
+    updateJobStatus(&readyQueue[rqTail], TO_STRING(running));
 
     // Update storage pointer of currently running job
     *jobPtr = readyQueue[rqTail];

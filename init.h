@@ -57,7 +57,7 @@ enum Scheduling_Policy {
 
 extern char* validPolicies[3];
 
-enum Job_Status { create, waiting, complete }; 
+enum Job_Status { create, waiting, running, complete }; 
 
 #define INPUT_BUFFER_SIZE 64
 #define OUTPUT_BUFFER_SIZE 2048
