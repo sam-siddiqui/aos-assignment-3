@@ -24,22 +24,22 @@ void runCLIParser() {
         else if (currCmd == NULL) 
             printf(NO_CMD_TEXT);
         
-        else if (match(currCmd, "help") || match(currCmd, "?"))
+        else if (match(currCmd, TO_STRING(help)) || match(currCmd, "?"))
             showHelp(cmdsV[1], cmdC);
 
-        else if (match(currCmd, "quit") || match(currCmd, "exit"))
+        else if (match(currCmd, TO_STRING(quit)) || match(currCmd, "exit"))
             quitProgram();
 
-        else if (match(currCmd, "test"))
+        else if (match(currCmd, TO_STRING(test)))
             initBenchmarkTest(cmdsV, cmdC);
         
-        else if (match(currCmd, "set_policy"))
+        else if (match(currCmd, TO_STRING(set_policy)))
             changeSchedulerPolicy(cmdsV, cmdC);
 
-        else if (match(currCmd, "list") || match(currCmd, "ls"))
+        else if (match(currCmd, TO_STRING(list)) || match(currCmd, "ls"))
             listQueue(cmdsV, cmdC);
 
-        else if (match(currCmd, "run"))
+        else if (match(currCmd, TO_STRING(run)))
             scheduleRun(cmdsV, cmdC);
 
         else

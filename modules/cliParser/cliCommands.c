@@ -20,7 +20,7 @@ void listQueue(char* cmdV[], int cmdC) {
 
 void changeSchedulerPolicy(char* cmdV[], int cmdC) {
     if(isTestRunning()) {
-        printf(ERROR_TEST_RUNNING_FORMAT, "set_policy");
+        printf(ERROR_TEST_RUNNING_FORMAT, TOSTRING(set_policy));
         return;
     }
     
@@ -44,7 +44,7 @@ void changeSchedulerPolicy(char* cmdV[], int cmdC) {
 void scheduleRun(char* cmdV[], int cmdC) {
 
     if(isTestRunning()) {
-        printf(ERROR_TEST_RUNNING_FORMAT, "run");
+        printf(ERROR_TEST_RUNNING_FORMAT, TO_STRING(run));
         return;
     }
 
