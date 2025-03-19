@@ -88,6 +88,7 @@ void initBenchmarkTest(char* cmdV[], int cmdC) {
     cmd = test;
 
     copyCmdV(cmdV);
+    resetTest();
     signalScheduler();
 
     printf(TEST_SUBMIT_SUCCESS_TEXT);

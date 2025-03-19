@@ -31,7 +31,6 @@ void enqueueJob(JobPtr job) {
 void scheduleTest() {
     int testStatus = 0;
     
-    resetTest();
     pthread_mutex_unlock(&rqLock);
 
     clearCompletedQueue(CLEAR_JOB);
