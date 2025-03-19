@@ -12,13 +12,14 @@
 #define BENCHMARK_TEST_FILE_PATH "sleep"
 
 // TODO is it better to have all text in one file or context-wise separated?
-#define BENCHMARK_TEST_PARAMS_COUNT 7 
+#define BENCHMARK_TEST_PARAMS_COUNT 8 
 #define BENCHMARK_JOBNAME_INDEX 1
 #define BENCHMARK_POLICY_INDEX 2
 #define BENCHMARK_NUMJOBS_INDEX 3
 #define BENCHMARK_PRILEVEL_INDEX 4
 #define BENCHMARK_MINCPU_INDEX 5
 #define BENCHMARK_MAXCPU_INDEX 6
+#define BENCHMARK_ARRIVALRATE_INDEX 7
 #define BENCHMARK_JOBARGS_COUNT 5
 
 struct benchMark {
@@ -28,6 +29,7 @@ struct benchMark {
     int priorityLevel;
     int minCPUTime;
     int maxCPUTime;
+    int arrivalRate;
     FILE* saveFileFP;
 };
 

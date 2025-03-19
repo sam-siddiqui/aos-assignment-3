@@ -64,7 +64,6 @@ enum Job_Status { create, waiting, complete };
 #define TEMP_EXTERN_BUFFER_SIZE 128
 #define COMP_EXTERN_BUFFER_SIZE 1024
 #define CMDV_NUM_ARGS 10
-#define ARRIVAL_RATE 0
 
 #define EXIT_SUCCESS 0
 #define EXIT_FAILURE 1

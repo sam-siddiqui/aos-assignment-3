@@ -57,5 +57,6 @@ int validateTestInputs(char* cmdV[], int cmdC) {
            isStrNumericOnly(cmdV[BENCHMARK_NUMJOBS_INDEX]) && 
            isStrNumericOnly(cmdV[BENCHMARK_PRILEVEL_INDEX]) &&
            isStrNumericOnly(cmdV[BENCHMARK_MINCPU_INDEX]) &&  
-           isStrNumericOnly(cmdV[BENCHMARK_MAXCPU_INDEX]);
+           isStrNumericOnly(cmdV[BENCHMARK_MAXCPU_INDEX]) &&
+           isStrNumericOnly(cmdV[BENCHMARK_ARRIVALRATE_INDEX]);
 }
