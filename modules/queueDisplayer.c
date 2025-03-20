@@ -43,7 +43,6 @@ void printReadyQueue() {
     char* currPolicy;
     currPolicy = getCurrPolicy();
     
-    printf("Head: %d, Tail: %d, \n", rqHead, rqTail);
     printf(READY_QUEUE_TITLE_FORMAT, totalSubmittedJobs, getRQCount());
     if (isRQEmpty() && !isAJobRunning()) return;    
         
