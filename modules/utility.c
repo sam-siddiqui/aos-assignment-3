@@ -16,10 +16,10 @@ void appendToBuffer(char* buffer, int bufferSize, const char* formattedNewText, 
     va_list args;
     va_start(args, formattedNewText);
     
-    char* endOfBuffer = strchr(buffer, '\0');
+    char* endOfBuffer = strchr(buffer, '\0');                               // Get end of the char*
     size_t remainingSpace = bufferSize - (endOfBuffer - buffer) - 1;
 
-    vsnprintf(endOfBuffer, remainingSpace + 1, formattedNewText, args);
+    vsnprintf(endOfBuffer, remainingSpace + 1, formattedNewText, args);     // Print till remaining space
 
     va_end(args);
 }
@@ -31,10 +31,10 @@ void appendToOutputBuffer(const char* formattedNewText, ...) {
     va_list args;
     va_start(args, formattedNewText);
 
-    char* endOfBuffer = strchr(outputBuffer, '\0');
+    char* endOfBuffer = strchr(outputBuffer, '\0');                     // Get end of the char*
     size_t remainingSpace = OUTPUT_BUFFER_SIZE - (endOfBuffer - outputBuffer) - 1;
 
-    vsnprintf(endOfBuffer, remainingSpace + 1, formattedNewText, args);
+    vsnprintf(endOfBuffer, remainingSpace + 1, formattedNewText, args); // Print till remaining space
     
     va_end(args);
 }
@@ -82,24 +82,25 @@ void clearBuffer(char* buffer, int maxBufferSize) {
 
 void flushOutputBuffer() {
     setConsoleColor(YELLOW);
-    if(outputBuffer != NULL && strlen(outputBuffer) > 0) 
+    if(outputBuffer != NULL && strlen(outputBuffer) > 0)        // Check if it exists in the first place
         printf("%s \n", outputBuffer);
     clearBuffer(outputBuffer, OUTPUT_BUFFER_SIZE);
-    setConsoleColor(WHITE);
+    setConsoleColor(WHITE);                                     // Reset color to CLI color
 }
 
 void clearInputBuffer() { 
     
     for (int i = 0; i < CMDV_NUM_ARGS; ++i) {
-        free(inputBufferArr[i]); 
-        inputBufferArr[i] = NULL;
+        free(inputBufferArr[i]);                // First free the individual char*
+        inputBufferArr[i] = NULL;               // Then null it against dangling pointers
     } 
-    pthread_mutex_unlock(&inpBufLock);
+    pthread_mutex_unlock(&inpBufLock);          // Since this is only used by scheduler, this was a bad decision
 }
 
 int in(char** arr, int arrLen, char* target) {
     int i;
     for (i = 0; i < arrLen; i++) {
+        // For each value in arr, compare if they match
         if (strncmp(arr[i], target, strlen(target)) == 0) {
             return 1;
         }
@@ -124,17 +125,20 @@ int copyStr(char* to, char* what) {
     return sizeof(to) - 1 <= strlen(what);
 }
 
+// Updates the status of a job, wrapper around strncpy
 void updateJobStatus(JobPtr job, char* value) {
     strncpy(job->status, value, sizeof(job->status) - 1);
     job->status[sizeof(job->status) - 1] = '\0';
 }
 
+// Updates the name of a job, wrapper around strncpy
 void updateJobName(JobPtr job, char* value) {
     strncpy(job->name, value, sizeof(job->name) - 1);
     job->name[sizeof(job->name) - 1] = '\0';
 }
 
 /**
+ * Generates a pointer to length sized char array of a UID
  * Borrowed from
  * https://stackoverflow.com/questions/51053568/generating-a-random-uuid-in-c
  */
