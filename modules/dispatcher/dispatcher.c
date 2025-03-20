@@ -7,7 +7,7 @@ void getNextScheduledJob(JobPtr currentJobPtr, JobPtr jobPtr) {
     // Update storage pointer of currently running job
     *jobPtr = readyQueue[rqTail];
     memcpy(currentJobPtr, jobPtr, sizeof(struct Job));
-    // currentJobPtr = jobPtr;
+    
     RunningJob = currentJobPtr;
 
     // Remove from readyQueue
@@ -20,10 +20,11 @@ void runJob(JobPtr currentJobPtr, JobPtr completedJobPtr) {
     int processStatus = 0;
     // Track the time and run the job
     time_t start = time(NULL);
-    execute(currentJobPtr, processStatus);
-    time_t end = time(NULL);
-
     currentJobPtr->startTime = start;
+    
+    execute(currentJobPtr, processStatus);
+    
+    time_t end = time(NULL);
     currentJobPtr->endTime = end;
 
     // switch (processStatus) {
@@ -43,7 +44,6 @@ void runJob(JobPtr currentJobPtr, JobPtr completedJobPtr) {
 
     // Store currently completed job to a new pointer
     memcpy(completedJobPtr, currentJobPtr, sizeof(struct Job));
-    // completedJobPtr = currentJobPtr;
 }
 
 void cycleNextJobInRQ(JobPtr jobPtr, JobPtr currentJobPtr, JobPtr completedJobPtr) {

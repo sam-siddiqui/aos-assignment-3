@@ -3,9 +3,15 @@
 int getRQCount() {return atomic_load(&currCount); }
 void decreaseRQCount(int val) { atomic_fetch_sub(&currCount, val);}
 void increaseRQCount(int val) { atomic_fetch_add(&currCount, val); }
-int getExpectedWaitingTime() {return atomic_load(&totalExpectedTime); }
+int _getExpectedWaitingTime() {return atomic_load(&totalExpectedTime); }
 void decExpectedWaitingTime(int val) { atomic_fetch_sub(&totalExpectedTime, val); }
 void incExpectedWaitingTime(int val) { atomic_fetch_add(&totalExpectedTime, val); }
+int getExpectedWaitingTime() { 
+    if (isAJobRunning())
+        return atomic_load(&totalExpectedTime) - (time(NULL) - RunningJob->startTime); 
+    
+    return _getExpectedWaitingTime();
+}
 
 void sortJobsBasedOnPolicy(u_int oldRQHead, u_int oldRQTail, enum Scheduling_Policy currSchedulePolicy) {
     u_int newRQHead = -1;
