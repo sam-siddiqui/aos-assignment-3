@@ -12,7 +12,7 @@ int isTestDone() {return atomic_load(&testRunning) == 0;}
 void storeBenchmarkTestHeader(FILE* fp, benchMarkPtr benchMark) {
     fprintf(fp, BENCHMARK_HEADER_FORMAT, 
         benchMark->sType, 
-        benchMark->arrivalRate,
+        benchMark->arrivalDelay,
         benchMark->numJobs, 
         benchMark->priorityLevel, 
         benchMark->minCPUTime, 
@@ -57,8 +57,8 @@ int createTestJobs(benchMarkPtr benchMark) {
         storeBenchmarkJobRow(benchMark->saveFileFP, testJob);
         storeBenchmarkJobRow(stdout, testJob);
 
-        if(benchMark->arrivalRate > 0)
-            sleep(benchMark->arrivalRate);
+        if(benchMark->arrivalDelay > 0)
+            sleep(benchMark->arrivalDelay);
     }
 
     free(jobArgs[RUN_BURSTTIME_INDEX]);
@@ -87,7 +87,7 @@ int createTestBenchmark(char* cmdV[], benchMarkPtr benchMark, FILE** ptrToFP) {
     benchMark->priorityLevel = atoi(cmdV[BENCHMARK_PRILEVEL_INDEX]);
     benchMark->minCPUTime = atoi(cmdV[BENCHMARK_MINCPU_INDEX]);
     benchMark->maxCPUTime = atoi(cmdV[BENCHMARK_MAXCPU_INDEX]);
-    benchMark->arrivalRate = atoi(cmdV[BENCHMARK_ARRIVALRATE_INDEX]);
+    benchMark->arrivalDelay = atoi(cmdV[BENCHMARK_ARRIVALRATE_INDEX]);
     benchMark->saveFileFP = *ptrToFP;
 
     if (changePolicy(benchMark->sType) == INVALID_POLICY) return INVALID_POLICY;
