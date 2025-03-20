@@ -42,8 +42,7 @@ int createTestJobs(benchMarkPtr benchMark) {
 
 
     for (int i = 0; i < benchMark->numJobs; i++) {
-        if (burstTimeDelta == 0) randBurstTime = rand() % benchMark->maxCPUTime + 1;
-        else randBurstTime = rand() % burstTimeDelta;
+        randBurstTime =  (rand() % (burstTimeDelta + 1)) + benchMark->minCPUTime;
 
         snprintf(jobArgs[RUN_BURSTTIME_INDEX], SIZE_INT_MAX_DIGITS, "%d", randBurstTime);
         
@@ -75,7 +74,7 @@ int openBenchmarkSaveFile(char* cmdV[], FILE** ptrToFP) {
     char saveFileName[BENCHMARK_SAVE_FILENAME_SIZE];
 
     sprintf(saveFileName, BENCHMARK_SAVEFILENAME_FORMAT, cmdV[1], cmdV[2]);
-    *ptrToFP = fopen(saveFileName, "w");
+    *ptrToFP = fopen(saveFileName, "a");
 
     return checkFileOpenStatus(*ptrToFP);
 }
