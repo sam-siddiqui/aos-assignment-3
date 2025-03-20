@@ -3,7 +3,10 @@
 #include "./utility.h"
 
 void externalProcessFailure(char* processName) {
+    // If external process creation failed
+    // Print that (which will be redirected to outputBuffer)
     printf(ERROR_PROC_CREATION_FAILED_FORMAT, processName);
+    
     exit(EXIT_FAILURE);
 }
 
@@ -19,9 +22,9 @@ void checkTestStatus(int status) {
 }
 
 void checkOutputBufferAllocation() {
-    if (outputBuffer == NULL) {
+    if (outputBuffer == NULL) {                         // Output buffer allocation failed
         fprintf(stderr, OUTPUT_BUFFER_FAILED_TEXT);
-        exit(EXIT_FAILURE); 
+        exit(EXIT_FAILURE);                             // The outputBuffer is needed across the program
     }
 }
 
@@ -47,9 +50,10 @@ int validateRunInputs(char* cmdV[], int cmdC) {
 }
 
 int validateTestInputs(char* cmdV[], int cmdC) {
+    // If num of inputs are not exactly as  BENCHMARK_TEST_PARAMS_COUNT
     if (cmdC < BENCHMARK_TEST_PARAMS_COUNT || cmdC > BENCHMARK_TEST_PARAMS_COUNT) return 0;
 
-    // First Character of save fileName is a number
+    // Check First Character of save fileName is a number
     char firstCharOfsaveFileName = cmdV[BENCHMARK_JOBNAME_INDEX][1];
     if (isNum(firstCharOfsaveFileName)) return 0;      // It is a number and shouldn't be
 

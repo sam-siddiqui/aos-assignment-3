@@ -14,6 +14,7 @@
 #define BENCHMARK_TEST_FILE_PATH "batch_job"
 
 // These are position indexes and member count of the benchmark struct
+
 #define BENCHMARK_TEST_PARAMS_COUNT 8 
 #define BENCHMARK_JOBNAME_INDEX 1
 #define BENCHMARK_POLICY_INDEX 2
