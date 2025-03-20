@@ -6,12 +6,13 @@ void setSchedulerNotReady() { atomic_store(&schedulerBusy, 1); }
 void setSchedulerReady() { atomic_store(&schedulerBusy, 0); }
 
 void scheduleJob(JobPtr job) {
-    
+    // Check if RQ is full, if so wait
     if (isRQFull()) pthread_cond_wait(&rqNotFull, &rqLock);
-
+    // Add the job to the last of the queue
     addJobToRQHead(job);
+    // Sort the jobs for second measure
     sortJobsBasedOnPolicy(rqHead, rqTail, currSchedulePolicy);
-    
+    // Unlock the queue
     pthread_mutex_unlock(&rqLock);
     signalDispatcher();
 }
@@ -99,7 +100,7 @@ void* scheduler(void* message) {
     setConsoleColor(RED);
     printf(QUIT_SCHEDULER_TEXT);
     
-    if(!isRQEmpty()) {
+    if(!isRQEmpty()) {                          // If RQ isn't empty, print the remaining jobs text
         printf(REMAINING_JOBS_SCHEDULER_TEXT);
         printf(REMAINING_JOBS_FORMAT, 
             getRQCount(), getExpectedWaitingTime()

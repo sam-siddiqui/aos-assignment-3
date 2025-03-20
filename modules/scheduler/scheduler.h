@@ -19,13 +19,15 @@ int isSchedulerBusy();
 void setSchedulerNotReady();
 void setSchedulerReady();
 
+// Schedules a job into the ReadyQueue
 void scheduleJob(JobPtr job);
-
+// Creates a job from a char* buffer, uses enqueueJob and createJob internally
 void enqueueJobFromBuffer(char* cmdV[]);
+// Enqueues a job into the readyQueue
 void enqueueJob(JobPtr job);
-
+// Creates a test from the given inputBufferArr or copy of cmdV
 void scheduleTest();
-
+// The driver program of the second thread
 void* scheduler(void* message);
 
 #endif // SCHEDULER_H_
