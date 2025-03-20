@@ -1,16 +1,16 @@
 #include "dispatcher.h"
 
 void getNextScheduledJob(JobPtr currentJobPtr, JobPtr jobPtr) {
-    // Update state in readyQueue to be running
+    // Update job's state in readyQueue to be running
     updateJobStatus(&readyQueue[rqTail], TO_STRING(running));
 
     // Update storage pointer of currently running job
     *jobPtr = readyQueue[rqTail];
     memcpy(currentJobPtr, jobPtr, sizeof(struct Job));
     
-    RunningJob = currentJobPtr;
+    RunningJob = currentJobPtr;                     // Set RunningJob towards this job
 
-    // Remove from readyQueue
+    // Reset it as if it were removed
     clearJob(jobPtr, CLEAR_JOB);
     readyQueue[rqTail] = *jobPtr;
     decreaseRQCount(1);
@@ -67,7 +67,7 @@ void cycleNextJobInRQ(JobPtr jobPtr, JobPtr currentJobPtr, JobPtr completedJobPt
 }
 
 void* dispatcher(void* message) {
-    // One pointer for removing RQ, one for during execution, one for adding to CQ
+    // One pointer for removing from RQ, one for during execution, one for adding to CQ
     JobPtr jobPtr = (JobPtr)malloc(sizeof(struct Job));
     JobPtr currentJobPtr = (JobPtr)malloc(sizeof(struct Job));
     JobPtr completedJobPtr = (JobPtr)malloc(sizeof(struct Job));
@@ -119,8 +119,10 @@ void* dispatcher(void* message) {
 
     setConsoleColor(YELLOW);
     printf(QUIT_DISPATCHER_TEXT);
+
     free(currentJobPtr);
     free(completedJobPtr);
     free(jobPtr);
+    
     pthread_exit(NULL);
 }

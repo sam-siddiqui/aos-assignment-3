@@ -14,13 +14,13 @@
 
 #ifndef DISPATCHER_H_
 #define DISPATCHER_H_
-
+// Extract the next scheduled job from the readyQueue
 void getNextScheduledJob(JobPtr currentJobPtr, JobPtr jobPtr);
-
+// Time and execute the job
 void runJob(JobPtr currentJobPtr, JobPtr completedJobPtr);
-
+// Cycle to the next job in Queue and see if it needs executing
 void cycleNextJobInRQ(JobPtr jobPtr, JobPtr currentJobPtr, JobPtr completedJobPtr);
-
+// The main driver function of the second thread
 void* dispatcher(void* message);
 
 #endif
