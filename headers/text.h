@@ -3,7 +3,9 @@
 
 #define VERSION_NUMBER "1.5"
 
-#define WELCOME_MAIN_TEXT "AUBatch " VERSION_NUMBER "\nCLI Ready!\nType help or ? to find more about the commands\n"
+#define WELCOME_MAIN_TEXT "AUBatch " VERSION_NUMBER "\nCLI Ready!\n" \
+                            "Warning: Can occasionally end up in an buggy state of queue not clearing. Use Ctrl + C at that stage\n"\
+                            "Type help or ? to find more about the commands\n"
 #define WELCOME_SCHEDULER_TEXT "Scheduler Thread... Ready \n"
 #define WELCOME_DISPATCHER_TEXT "Executor Thread... Ready \n"
 
@@ -52,7 +54,7 @@
 #define TEST_HELP_TEXT "Automated Test File: \n" \
                         "Simulate multiple jobs at once for benchmark testing \n" \
                         "\ttest <benchmark_file_name> <scheduling_policy> <numJobs> <priority_levels_from_0>\n " \
-                        "\t<minCPUtime> <maxCPUtime> <arrival_rate>\n" 
+                        "\t<minCPUtime> <maxCPUtime> <arrival_delay>\n" 
 
 #define QUIT_HELP_TEXT "Quit Program: \n" \
                          "\tquit\n" \
@@ -91,7 +93,7 @@
                                  "Scheduler is busy! run is not available till then \n"
 
 #define ERROR_RUN_TEXT_FORMAT "Error - Run: %d params given instead of 4\n" \
-                              "run <job:str> <time:int> <pri:int> : submit a job named <job> with execution " \
+                              "run <time:int> <pri:int> <job:str> <args:...> : submit a job named <job> with execution " \
                               "time <time> and priority <pri>\n"
 
 #define RUN_SUCCESS_TEXT_FORMAT "Job %s was submitted successfully \n" \
@@ -106,7 +108,7 @@
 
 /*---------------------------------------------Test Command ------------------------------------------------------------------*/
 
-#define BENCHMARK_HEADER_FORMAT "\nBenchmark Test, Schedule Policy: %s, Arrival Rate: %d \n" \
+#define BENCHMARK_HEADER_FORMAT "\nBenchmark Test, Schedule Policy: %s, Arrival Delay in (s): %d \n" \
                                 "Number of Jobs:%d, \t Max Priority Level:%d, \t MinCPU:%d, \t MaxCPU:%d \n" \
                                 "Name \t\t\t CPU_Burst_Time \t\t Priority \t    Status \n"
 
@@ -116,7 +118,7 @@
 
 #define ERROR_TEST_TEXT "Error: Test Command. \n " \
                         "test <benchmark_save_file> <policy> <numJobs> <priority_levels_from_0> \n" \
-                        "\t<min_CPU_Time> <max_CPU_Time> <arrival_rate>\n"
+                        "\t<min_CPU_Time> <max_CPU_Time> <arrival_delay>\n"
 
 #define ERROR2_TEST_TEXT "Error: Test Command. \n" \
                         "\tThere are currently jobs in queue or running \n" \
