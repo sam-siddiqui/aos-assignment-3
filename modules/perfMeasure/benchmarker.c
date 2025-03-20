@@ -31,8 +31,9 @@ int createTestJobs(benchMarkPtr benchMark) {
     int randPriority = 0;
     int burstTimeDelta = benchMark->maxCPUTime - benchMark->minCPUTime;
     char* jobArgs[BENCHMARK_JOBARGS_COUNT + 1];
-    int SIZE_INT_MAX_DIGITS = 12;
+    int SIZE_INT_MAX_DIGITS = 12;                // Based on numCharacters in INT_MAX
 
+    // Populate the mock cmdV
     jobArgs[0] = TO_STRING(test);
     jobArgs[RUN_BURSTTIME_INDEX] = malloc(SIZE_INT_MAX_DIGITS * sizeof(char));
     jobArgs[RUN_PRI_INDEX] = malloc(SIZE_INT_MAX_DIGITS * sizeof(char));
@@ -41,7 +42,7 @@ int createTestJobs(benchMarkPtr benchMark) {
     jobArgs[BENCHMARK_JOBARGS_COUNT] = NULL;
 
 
-    for (int i = 0; i < benchMark->numJobs; i++) {
+    for (int i = 0; i < benchMark->numJobs; i++) {   // Loop and populate the job struct
         randBurstTime =  (rand() % (burstTimeDelta + 1)) + benchMark->minCPUTime;
 
         snprintf(jobArgs[RUN_BURSTTIME_INDEX], SIZE_INT_MAX_DIGITS, "%d", randBurstTime);
@@ -52,16 +53,16 @@ int createTestJobs(benchMarkPtr benchMark) {
         snprintf(jobArgs[RUN_JOBNAME_INDEX + 1], SIZE_INT_MAX_DIGITS, "%d", randBurstTime);
 
         populateJobFromBuffer(testJob, jobArgs);
-        enqueueJob(testJob);
+        enqueueJob(testJob);                                    // Enqueue it
 
-        storeBenchmarkJobRow(benchMark->saveFileFP, testJob);
-        storeBenchmarkJobRow(stdout, testJob);
+        storeBenchmarkJobRow(benchMark->saveFileFP, testJob);   // Print it
+        storeBenchmarkJobRow(stdout, testJob);  
 
-        if(benchMark->arrivalDelay > 0)
+        if(benchMark->arrivalDelay > 0)                         // Check if any arrival rate or delay
             sleep(benchMark->arrivalDelay);
     }
 
-    free(jobArgs[RUN_BURSTTIME_INDEX]);
+    free(jobArgs[RUN_BURSTTIME_INDEX]);                         // Free the stuff we created
     free(jobArgs[RUN_PRI_INDEX]);
     free(jobArgs[RUN_JOBNAME_INDEX + 1]);
     clearJob(testJob, CLEAR_JOB);
@@ -88,7 +89,7 @@ int createTestBenchmark(char* cmdV[], benchMarkPtr benchMark, FILE** ptrToFP) {
     benchMark->minCPUTime = atoi(cmdV[BENCHMARK_MINCPU_INDEX]);
     benchMark->maxCPUTime = atoi(cmdV[BENCHMARK_MAXCPU_INDEX]);
     benchMark->arrivalDelay = atoi(cmdV[BENCHMARK_ARRIVALRATE_INDEX]);
-    benchMark->saveFileFP = *ptrToFP;
+    benchMark->saveFileFP = *ptrToFP;                   // A reference to the file pointer, neat
 
     if (changePolicy(benchMark->sType) == INVALID_POLICY) return INVALID_POLICY;
 
@@ -97,10 +98,12 @@ int createTestBenchmark(char* cmdV[], benchMarkPtr benchMark, FILE** ptrToFP) {
 
 
 int createTest(char* cmdV[], FILE** ptrToFP) {
+    // Check if file was opened
     if (openBenchmarkSaveFile(cmdV, ptrToFP) == BENCHMARK_FILE_CREATION_FAILED) return BENCHMARK_FILE_CREATION_FAILED;
 
     benchMarkPtr benchMark = (benchMarkPtr) malloc(INPUT_BUFFER_SIZE * sizeof(struct benchMark));
     
+    // Check if benchmark was created
     if (createTestBenchmark(cmdV, benchMark, ptrToFP) == INVALID_POLICY){
         free(benchMark);
         fclose(*ptrToFP);
@@ -109,11 +112,12 @@ int createTest(char* cmdV[], FILE** ptrToFP) {
 
     initRandomSeed();
 
+    // Print the headers first
     storeBenchmarkTestHeader(benchMark->saveFileFP, benchMark);
     setConsoleColor(RED);
     storeBenchmarkTestHeader(stdout, benchMark);
 
-    createTestJobs(benchMark);
+    createTestJobs(benchMark);                         // create the testjobs based on the benchMark ptr 
 
     setTestReady();
 
