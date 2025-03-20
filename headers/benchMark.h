@@ -9,7 +9,7 @@
 
 #define BENCHMARK_SAVE_FILENAME_SIZE 25
 
-#define BENCHMARK_TEST_FILE_PATH "sleep"
+#define BENCHMARK_TEST_FILE_PATH "batch_job"
 
 // TODO is it better to have all text in one file or context-wise separated?
 #define BENCHMARK_TEST_PARAMS_COUNT 8 
