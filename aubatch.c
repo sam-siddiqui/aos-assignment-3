@@ -61,12 +61,13 @@ int main(int argc, char *argv[]) {
     printf(WELCOME_MAIN_TEXT);
     char* schedulerMessage = WELCOME_SCHEDULER_TEXT;
     char* dispatcherMessage = WELCOME_DISPATCHER_TEXT;
+
+    // Init the outputBuffer, check for errors, then reset it first
     outputBuffer = (char*)malloc(OUTPUT_BUFFER_SIZE * sizeof(char));
     void checkOutputBufferAllocation();
     clearBuffer(outputBuffer, OUTPUT_BUFFER_SIZE);
     
     // Init the thread variables, mutex, attributes
-    // And the readyQueue for which we're doing all this!
     pthread_mutex_init(&inpBufLock, NULL);
     pthread_mutex_init(&initLock, NULL);
     pthread_mutex_init(&rqLock, NULL);
@@ -81,7 +82,9 @@ int main(int argc, char *argv[]) {
     atomic_init(&testRunning, 0);
     atomic_init(&testReady, 0);
     
+    // Create threads in a detachable and joinable state
     pthread_attr_setdetachstate(&threadAttr, PTHREAD_CREATE_JOINABLE);
+    // Lock the creation process until one thread is created
     pthread_mutex_lock(&initLock);
     pthread_create(&executorThread, &threadAttr, dispatcher, (void*) dispatcherMessage);
     pthread_cond_wait(&threadReady, &initLock);
@@ -104,13 +107,18 @@ int main(int argc, char *argv[]) {
     pthread_cond_destroy(&rqNotFull);
     pthread_cond_destroy(&threadReady);
     pthread_cond_destroy(&inpBufUpdate);
+
     setConsoleColor(WHITE);
     printf(QUIT_MAIN_TEXT);
+
     free(outputBuffer);
+
+    // Waits for the other threads before exiting
     pthread_exit(NULL);
 }
 
 void quitProgram() {
+    // Set the global enum cmd
     cmd = quit;
 
     setConsoleColor(WHITE);
