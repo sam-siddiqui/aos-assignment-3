@@ -1,7 +1,9 @@
 #ifndef TEXT_H_
 #define TEXT_H_
 
-#define WELCOME_MAIN_TEXT "AUBatch 1.0\nType help or ? to find more about the commands\n"
+#define VERSION_NUMBER "1.5"
+
+#define WELCOME_MAIN_TEXT "AUBatch " VERSION_NUMBER "\nType help or ? to find more about the commands\n"
 #define WELCOME_SCHEDULER_TEXT "Scheduler Thread (with CLI Parser)... Ready \n"
 #define WELCOME_DISPATCHER_TEXT "Executor Thread... Ready \n"
 
