@@ -2,7 +2,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include "../../init.h"
+#include "../../shared.h"
 #include "../../modules/utility.h"
 
 #ifndef JC_BASE_H

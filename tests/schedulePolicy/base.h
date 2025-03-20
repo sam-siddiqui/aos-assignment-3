@@ -1,7 +1,7 @@
 #include <CUnit/Basic.h>
 #include <stdio.h>
 #include <stdlib.h>
-#include "../../init.h"
+#include "../../shared.h"
 
 #ifndef SP_BASE_H
 #define SP_BASE_H

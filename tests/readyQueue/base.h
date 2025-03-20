@@ -2,7 +2,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdatomic.h>
-#include "../../init.h"
+#include "../../shared.h"
 #include "../../modules/utility.h"
 
 #ifndef RQ_BASE_H
