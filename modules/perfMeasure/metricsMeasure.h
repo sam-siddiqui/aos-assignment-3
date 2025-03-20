@@ -11,9 +11,9 @@
 
 #ifndef METRICS_MEASURE_H
 #define METRICS_MEASURE_H
-
+// Calculate and store the job metrics of the job
 void calculateCompleteJobMetrics(JobPtr completedJobPtr);
-
+// Calculate the total Statistics
 void calculateCompletedJobStats();
 
 void clearStats();

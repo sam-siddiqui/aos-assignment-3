@@ -2,7 +2,7 @@
 
 void calculateCompleteJobMetrics(JobPtr completedJobPtr) {
     if (completedJobPtr == NULL) return;
-
+    // Boundary checking against 0
     int actualCPUTime = MAX(0, completedJobPtr->endTime - completedJobPtr->startTime);
     completedJobPtr->executionTime = actualCPUTime;
     completedJobPtr->turnaroundTime = MAX(0, completedJobPtr->endTime - completedJobPtr->arrivalTime);
@@ -10,11 +10,11 @@ void calculateCompleteJobMetrics(JobPtr completedJobPtr) {
     completedJobPtr->responseTime = MAX(0, completedJobPtr->startTime - completedJobPtr->arrivalTime);
 }
 
-void calculateCompletedJobStats() {
-    if (totalSubmittedJobs == 0) return;
+void calculateCompletedJobStats() { 
+    if (totalSubmittedJobs == 0) return;        // If no job is submitted
     if (totalCompletedJobs == 0) return;
 
-    if (cqHead == NULL) return;
+    if (cqHead == NULL) return;                 // If no job is completed
     
     CQNodePtr tempCQHead = cqHead;
     int turnaroundTotal = 0;
@@ -37,7 +37,7 @@ void calculateCompletedJobStats() {
 
         // Welford's method of live Standard Deviation and Mean
         // Because I didn't want to create a integer array
-        count++;
+        count++; 
         tempAvgResponseTime = avgResponseTime + (tempCQHead->job.responseTime - avgResponseTime) / count;
         responseSSD += (tempCQHead->job.responseTime - avgResponseTime) * (tempCQHead->job.responseTime - tempAvgResponseTime);
         avgResponseTime = tempAvgResponseTime;
