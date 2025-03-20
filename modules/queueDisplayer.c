@@ -5,7 +5,7 @@
 
 char* getCurrPolicy() {
     switch (currSchedulePolicy) {
-
+        // X Macro to link policy enum to their string version
         #define X(name, _, __) \
         case name: \
             return TO_STRING(name);
@@ -44,14 +44,14 @@ void printReadyQueue() {
     currPolicy = getCurrPolicy();
     
     printf(READY_QUEUE_TITLE_FORMAT, totalSubmittedJobs, getRQCount());
-    if (isRQEmpty() && !isAJobRunning()) return;    
+    if (isRQEmpty() && !isAJobRunning()) return;    // If RQ is empty or there's no job running, return
         
     printf(READY_QUEUE_HEADER_FORMAT, currPolicy);
     
     printf(READY_QUEUE_TABLEHEADER_FORMAT);
-    printRunningJob();
+    printRunningJob();                              // First print the running Job
 
-    char iString[LOOP_I_STRING_LEN];
+    char iString[LOOP_I_STRING_LEN];                // Then others
     for (int i = 0; i < MAX_JOB_NUMBER; i++) {
         if (isReadyJob(&readyQueue[i])) continue;
         
@@ -63,9 +63,9 @@ void printReadyQueue() {
 
 void printCompleteQueue() {
     CQNodePtr currCompleteJob = cqHead;
-    if (currCompleteJob == NULL) return;
+    if (currCompleteJob == NULL) return;                        // If no completed jobs
     
-    printf(COMPLETED_QUEUE_TITLE_FORMAT, totalCompletedJobs);
+    printf(COMPLETED_QUEUE_TITLE_FORMAT, totalCompletedJobs);   // If no completed jobs
     if (totalCompletedJobs == 0) return;
     
     printf(COMPLETED_QUEUE_TABLEHEADER_FORMAT);
