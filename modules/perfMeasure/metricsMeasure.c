@@ -25,11 +25,22 @@ void calculateCompletedJobStats() {
     minResponseTime = __INT_MAX__;
     maxResponseTime = -__INT_MAX__;
 
+    int count = 0;
+    float tempAvgResponseTime = 0;
+    float responseSSD = 0;
+    avgResponseTime = 0;
+
     while (tempCQHead != NULL) {
         turnaroundTotal += tempCQHead->job.turnaroundTime;
         waitingTotal += tempCQHead->job.waitTime;
         actualCPUTotal += tempCQHead->job.executionTime;
 
+        // Welford's method of live Standard Deviation and Mean
+        // Because I didn't want to create a integer array
+        count++;
+        tempAvgResponseTime = avgResponseTime + (tempCQHead->job.responseTime - avgResponseTime) / count;
+        responseSSD += (tempCQHead->job.responseTime - avgResponseTime) * (tempCQHead->job.responseTime - tempAvgResponseTime);
+        avgResponseTime = tempAvgResponseTime;
         responseTotal += tempCQHead->job.responseTime;
         if (tempCQHead->job.responseTime < minResponseTime) minResponseTime = tempCQHead->job.responseTime;
         if (tempCQHead->job.responseTime > maxResponseTime) maxResponseTime = tempCQHead->job.responseTime;
@@ -37,7 +48,8 @@ void calculateCompletedJobStats() {
         tempCQHead = tempCQHead->nextJob;
     }
     
-    avgResponseTime = responseTotal / totalCompletedJobs;
+    responseTimeStd = count > 2 ? sqrt(responseSSD / count) : 0.0;
+    
     avgCPUTime = actualCPUTotal / totalCompletedJobs;
     avgTurnaroundTime = turnaroundTotal / totalCompletedJobs;
     avgWaitTime = waitingTotal / totalCompletedJobs;
@@ -49,6 +61,7 @@ void clearStats() {
     avgResponseTime = 0;
     minResponseTime = 0;
     maxResponseTime = 0;
+    responseTimeStd = 0.0;
     avgThroughput = 0;
     avgTurnaroundTime = 0;
     avgWaitTime = 0;
@@ -65,6 +78,7 @@ void storeStatsToFile(FILE* fp) {
         minResponseTime, 
         avgResponseTime, 
         maxResponseTime, 
+        responseTimeStd, 
         avgThroughput
     );
 }

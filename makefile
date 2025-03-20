@@ -1,6 +1,6 @@
 CC = gcc
 CFLAGS = -Wall -g -ggdb -std=gnu17 -lpthread 
-LDFLAGS = 
+LDFLAGS = -lm
 SCHEDULER_DIR = modules/scheduler
 DISPATCHER_DIR = modules/dispatcher
 CLI_DIR = modules/cliParser

@@ -137,6 +137,7 @@
                      "Minimum response time: \t %11d seconds \n" \
                      "Average response time: \t %11.2f seconds \n" \
                      "Maximum response time: \t %11d seconds \n" \
+                     "StdDev response time: \t %11.2f seconds \n" \
                      "Throughput: \t %16.6f No./second \n"
 
 #endif  // TEXT_H_
