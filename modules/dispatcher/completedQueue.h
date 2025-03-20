@@ -1,6 +1,6 @@
 #include <stdlib.h>
 #include "../utility.h"
-#include "./../../init.h"
+#include "./../../shared.h"
 #include "../../headers/job.h"
 
 #ifndef COMPLETE_QUEUE_H_

@@ -1,7 +1,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include "../../headers/job.h"
-#include "./../../init.h"
+#include "./../../shared.h"
 #include "../utility.h"
 
 #ifndef SCH_POLICY_H_

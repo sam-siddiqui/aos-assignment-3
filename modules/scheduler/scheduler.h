@@ -2,7 +2,7 @@
 #include <string.h>
 #include <time.h>
 
-#include "./../../init.h"
+#include "./../../shared.h"
 #include "../errorHandlers.h"
 #include "../utility.h"
 #include "../../headers/job.h"

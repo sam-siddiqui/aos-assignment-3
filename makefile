@@ -15,7 +15,7 @@ SRC = aubatch.c \
 
 OBJ = $(SRC:.c=.o)
 EXEC = aubatch.exe
-DEPS = init.h
+DEPS = shared.h
 
 $(EXEC): $(OBJ)
 	$(CC) $(OBJ) -o $(EXEC) $(LDFLAGS)

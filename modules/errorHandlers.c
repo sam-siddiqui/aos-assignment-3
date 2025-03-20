@@ -1,5 +1,5 @@
 #include "errorHandlers.h"
-#include "../init.h"
+#include "../shared.h"
 #include "./utility.h"
 
 void externalProcessFailure(char* processName) {

@@ -5,7 +5,7 @@
 #include <sys/wait.h>
 #include <unistd.h>
 #include "../../headers/job.h"
-#include "./../../init.h"
+#include "./../../shared.h"
 #include "./../utility.h"
 #include "../perfMeasure/metricsMeasure.h"
 #include "../perfMeasure/benchmarker.h"

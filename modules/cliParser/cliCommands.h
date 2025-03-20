@@ -6,7 +6,7 @@
 #include <string.h>
 #include <unistd.h>
 
-#include "../../init.h"
+#include "../../shared.h"
 #include "../../headers/text.h"
 #include "cliUtility.h"
 #include "../queueDisplayer.h"

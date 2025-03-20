@@ -6,7 +6,7 @@
 #include "../scheduler/readyQueue.h"
 #include "../../headers/benchMark.h"
 #include "../../headers/job.h"
-#include "../../init.h"
+#include "../../shared.h"
 
 #ifndef BENCHMARKER_H
 #define BENCHMARKER_H

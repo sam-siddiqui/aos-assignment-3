@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
-#include "init.h"
+#include "shared.h"
 #include "./modules/errorHandlers.h"
 
 extern void* scheduler(void* message);

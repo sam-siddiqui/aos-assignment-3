@@ -4,7 +4,7 @@
 #include <string.h>
 
 #include "./../headers/job.h"
-#include "./../init.h" 
+#include "./../shared.h" 
 
 #ifndef UTILITY_H
 #define UTILITY_H

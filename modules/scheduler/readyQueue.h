@@ -1,5 +1,5 @@
 #include "../../headers/job.h"
-#include "./../../init.h"
+#include "./../../shared.h"
 #include "../utility.h"
 #include "schedulePolicy.h"
 

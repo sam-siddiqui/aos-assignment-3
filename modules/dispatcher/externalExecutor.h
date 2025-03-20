@@ -4,7 +4,7 @@
 #include <unistd.h>
 #include <string.h>
 #include "../../headers/job.h"
-#include "./../../init.h"
+#include "./../../shared.h"
 #include "../errorHandlers.h"
 #include "../utility.h"
 

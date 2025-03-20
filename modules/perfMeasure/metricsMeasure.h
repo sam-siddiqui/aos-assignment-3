@@ -6,7 +6,7 @@
 #include <math.h>
 
 #include "../../headers/job.h"
-#include "./../../init.h"
+#include "./../../shared.h" 
 #include "../utility.h"
 
 #ifndef METRICS_MEASURE_H

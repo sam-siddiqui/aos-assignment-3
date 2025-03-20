@@ -4,7 +4,7 @@
 #include <string.h>
 
 #include "../../headers/text.h"
-#include "../../init.h"
+#include "../../shared.h"
 
 void copyCmdV(char* cmdV[]);
 int inputCleanup(char* buffer, char* cmdsV[]);
