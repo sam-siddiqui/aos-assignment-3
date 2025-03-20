@@ -22,11 +22,18 @@ void calculateCompletedJobStats() {
     int actualCPUTotal = 0;
     int responseTotal = 0;
 
+    minResponseTime = __INT_MAX__;
+    maxResponseTime = -__INT_MAX__;
+
     while (tempCQHead != NULL) {
         turnaroundTotal += tempCQHead->job.turnaroundTime;
         waitingTotal += tempCQHead->job.waitTime;
-        responseTotal += tempCQHead->job.responseTime;
         actualCPUTotal += tempCQHead->job.executionTime;
+
+        responseTotal += tempCQHead->job.responseTime;
+        if (tempCQHead->job.responseTime < minResponseTime) minResponseTime = tempCQHead->job.responseTime;
+        if (tempCQHead->job.responseTime > maxResponseTime) maxResponseTime = tempCQHead->job.responseTime;
+
         tempCQHead = tempCQHead->nextJob;
     }
     
@@ -40,7 +47,8 @@ void calculateCompletedJobStats() {
 void clearStats() {
     avgCPUTime = 0;
     avgResponseTime = 0;
-    avgResponseTime = 0;
+    minResponseTime = 0;
+    maxResponseTime = 0;
     avgThroughput = 0;
     avgTurnaroundTime = 0;
     avgWaitTime = 0;
@@ -54,16 +62,14 @@ void storeStatsToFile(FILE* fp) {
         avgTurnaroundTime, 
         avgCPUTime, 
         avgWaitTime, 
+        minResponseTime, 
+        avgResponseTime, 
+        maxResponseTime, 
         avgThroughput
     );
 }
 
 void printStats() {
-    // printf("Total number of job submitted: %d \n", totalSubmittedJobs);
-    // printf( "Average turnaround time: %2f seconds \n", avgTurnaroundTime);
-    // printf("Average CPU time: %2f seconds \n", avgCPUTime);
-    // printf("Average waiting time: %2f seconds \n", avgWaitTime);
-    // printf("Throughput: %2f No./second \n", avgThroughput);
     storeStatsToFile(stdout);
 }
 

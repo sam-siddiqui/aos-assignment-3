@@ -40,6 +40,8 @@ extern float avgWaitTime;                               // Changed by scheduler 
 extern float avgCPUTime;                                // Changed by scheduler thread only (perf_measure)
 extern float avgResponseTime;                           // Changed by scheduler thread only (perf_measure)
 extern float avgThroughput;                             // Changed by scheduler thread only (perf_measure)
+extern int maxResponseTime;                           // Changed by scheduler thread only (perf_measure)
+extern int minResponseTime;                           // Changed by scheduler thread only (perf_measure)
 extern FILE* fp;                                        // Changed by scheduler thread only (perf_measure)
 
 extern void clearStats();

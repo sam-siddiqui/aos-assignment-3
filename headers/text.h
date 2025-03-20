@@ -132,6 +132,9 @@
                      "Average turnaround time: %11.2f seconds \n" \
                      "Average CPU time: \t %11.2f seconds \n" \
                      "Average waiting time: \t %11.2f seconds \n" \
+                     "Minimum response time: \t %11d seconds \n" \
+                     "Average response time: \t %11.2f seconds \n" \
+                     "Maximum response time: \t %11d seconds \n" \
                      "Throughput: \t %16.6f No./second \n"
 
 #endif  // TEXT_H_

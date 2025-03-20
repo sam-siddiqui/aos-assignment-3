@@ -28,6 +28,8 @@ float avgTurnaroundTime = 0;
 float avgWaitTime = 0;
 float avgCPUTime = 0;
 float avgResponseTime = 0;
+int minResponseTime = 0;
+int maxResponseTime = 0;
 u_int totalCompletedJobs = 0;
 float avgThroughput = 0;
 struct Job readyQueue[MAX_JOB_NUMBER];
