@@ -23,20 +23,20 @@ void parentProgramFlow(
 ) {
     int nBytesRead = 0;
     pid_t ch_pid;
-    close(externBufferPipe[WRITE_PIPE]);
+    close(externBufferPipe[WRITE_PIPE]);                                                    // The parent isn't writing
     do {
         while (
             (nBytesRead = read(externBufferPipe[READ_PIPE], tempExternBuffer, tempExternBufferSize)) != 0
-        ) {
-            appendToBuffer(completeExternBuffer, completeExternBufferSize, tempExternBuffer);
+        ) {             // Listen for output from the child process
+            appendToBuffer(completeExternBuffer, completeExternBufferSize, tempExternBuffer);   // Append to temp buffer
         }
         
-        ch_pid = waitpid(pid, &forkedProcStatus, WUNTRACED | WCONTINUED);
-        if (checkProcessFailed(ch_pid)) {
+        ch_pid = waitpid(pid, &forkedProcStatus, WUNTRACED | WCONTINUED);                   // Till the child process terminates
+        if (checkProcessFailed(ch_pid)) {                                                   // If failed, log it
             appendToOutputBuffer(ERROR_RUN_WAITPID_TEXT);
         }
         appendToOutputBuffer(completeExternBuffer);
-    } while (!WIFEXITED(forkedProcStatus) && !WIFSIGNALED(forkedProcStatus));
+    } while (!WIFEXITED(forkedProcStatus) && !WIFSIGNALED(forkedProcStatus));               // Do that till child process exits or signals
     appendToOutputBuffer(DISPATCHER_COLOR);
 }
 
@@ -51,15 +51,20 @@ void execute(JobPtr job, int status) {
 
     char* const* jobArgs = job->jobArgs;
 
-    tempExternBuffer = (char*)malloc((tempExternBufferSize + 1) * sizeof(char));
+    // Create the buffers, and reset them
+    tempExternBuffer = (char*)malloc((tempExternBufferSize + 1) * sizeof(char));            // +1 for NULL
     completeExternBuffer = (char*)malloc((completeExternBufferSize + 1) * sizeof(char));
     clearBuffer(tempExternBuffer, tempExternBufferSize + 1);
     clearBuffer(completeExternBuffer, completeExternBufferSize + 1);
 
-    appendToBuffer(completeExternBuffer, completeExternBufferSize, EXTERNAL_P_COLOR);
+    appendToBuffer(completeExternBuffer, completeExternBufferSize, EXTERNAL_P_COLOR);       // This is the color for the external program
 
-    if(pipeCreationFailed(externBufferPipe))
+    if(pipeCreationFailed(externBufferPipe)){
         appendToOutputBuffer(ERROR_RUN_PIPE_TEXT);
+        free(tempExternBuffer);
+        free(completeExternBuffer);
+        return;
+    }
 
     // Here, forking instead of another thread because
     // Processes are protected by hardware
@@ -74,7 +79,7 @@ void execute(JobPtr job, int status) {
     else if (inChildProcess(pid))  // Execute and run the program!
         externalProgramFlow(jobArgs, externBufferPipe);
 
-    else  // In the parent, executor's process thread
+    else  // In the parent, dispatcher's process thread
         parentProgramFlow(
             forkedProcStatus, 
             externBufferPipe, 
