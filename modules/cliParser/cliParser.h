@@ -11,7 +11,7 @@
 #include "cliCommands.h"
 #include "../utility.h"
 #include "../perfMeasure/benchmarker.h"
-
+// The driver program of the main thread
 void runCLIParser();
 
 #endif

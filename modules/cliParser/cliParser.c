@@ -12,15 +12,15 @@ void runCLIParser() {
 
         if (cmd != quit) newLinePrint();
         fgets(cmdBuf, INPUT_BUFFER_SIZE, stdin);
-        
+        // If no test is running, print the outputBuffer
         if(!isTestRunning()) flushOutputBuffer();
-        
+        // Convert the buffer string into char*
         cmdC = inputCleanup(cmdBuf, cmdsV);
         currCmd = cmdsV[0];
 
         if (isTestDone() && isTestReady() && currCmd == NULL)
             printStats();
-
+        // Here, NULL meaning simply pressing enter with no input
         else if (currCmd == NULL) 
             printf(NO_CMD_TEXT);
         
