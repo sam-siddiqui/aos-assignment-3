@@ -26,6 +26,6 @@ void parentProgramFlow(
 );
 
 // The main function of the external program executor, uses fork and execv
-void execute(JobPtr job, int status);
+void execute(JobPtr job, int *status);
 
 #endif

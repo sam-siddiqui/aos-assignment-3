@@ -40,7 +40,7 @@ void parentProgramFlow(
     appendToOutputBuffer(DISPATCHER_COLOR);
 }
 
-void execute(JobPtr job, int status) {
+void execute(JobPtr job, int *status) {
     pid_t pid;
     int externBufferPipe[2];
     int tempExternBufferSize = TEMP_EXTERN_BUFFER_SIZE;
@@ -63,6 +63,7 @@ void execute(JobPtr job, int status) {
         appendToOutputBuffer(ERROR_RUN_PIPE_TEXT);
         free(tempExternBuffer);
         free(completeExternBuffer);
+        *status = PROCESS_OR_PIPE_FAILED;
         return;
     }
 
@@ -73,8 +74,10 @@ void execute(JobPtr job, int status) {
     // And We don't want execv replacing the dispatcher thread!
     pid = fork();
 
-    if (errorForking(pid)) 
+    if (errorForking(pid)) {
         appendToOutputBuffer(ERROR_RUN_FORK_TEXT);
+        *status = FORK_FAILED;
+    }
 
     else if (inChildProcess(pid))  // Execute and run the program!
         externalProgramFlow(jobArgs, externBufferPipe);
@@ -90,4 +93,5 @@ void execute(JobPtr job, int status) {
 
     free(tempExternBuffer);
     free(completeExternBuffer);
+    *status = SUCCESS;
 }

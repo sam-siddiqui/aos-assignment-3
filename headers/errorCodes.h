@@ -4,6 +4,7 @@
 #define SUCCESS 1 
 
 #define PROCESS_OR_PIPE_FAILED -1
+#define FORK_FAILED -3
 #define CMD_NUM_WRONG -5
 #define CMD_TYPE_WRONG 5 
 #define BUFFER_FULL -10

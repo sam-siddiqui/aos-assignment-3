@@ -22,7 +22,7 @@ void runJob(JobPtr currentJobPtr, JobPtr completedJobPtr) {
     time_t start = time(NULL);
     currentJobPtr->startTime = start;
     
-    execute(currentJobPtr, processStatus);
+    execute(currentJobPtr, &processStatus);
     
     time_t end = time(NULL);
     currentJobPtr->endTime = end;
